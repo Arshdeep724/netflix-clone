@@ -150,8 +150,7 @@ export class AuthRepository {
         resetCode: resetCode,
       },
     });
-    // mail to send reset code
-    // await this.mailService.sendResetCode(user.email,user.resetCode);
+    // send mail here
   }
 
   async resetPassword(userId: string, resetCode: string, newPassword: string) {
