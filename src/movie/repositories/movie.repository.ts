@@ -15,7 +15,7 @@ export class MovieRepository {
   }
 
   async getFavourites(userId: string) {
-    return this.prismaService.favouriteMovie.findMany({
+    const favMovies = await this.prismaService.favouriteMovie.findMany({
       where: {
         user_id: userId,
       },
@@ -28,6 +28,15 @@ export class MovieRepository {
         overview: true,
       },
     });
+    const transformedMovies = favMovies.map((movie) => ({
+      id: movie.movie_id,
+      backdrop_path: movie.backdrop_path,
+      original_title: movie.original_title,
+      title: movie.title,
+      poster_path: movie.poster_path,
+      overview: movie.overview,
+    }));
+    return transformedMovies;
   }
 
   async addFavourite(userId: string, favouriteMovie: CreateFavouriteMovieDto) {
